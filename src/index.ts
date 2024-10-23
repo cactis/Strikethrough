@@ -2,23 +2,23 @@
  * Build styles
  */
 import './index.css';
-import {IconUnderline} from '@codexteam/icons'
+import { IconStrikethrough } from '@codexteam/icons'
 import {type API, type InlineTool, type SanitizerConfig} from "@editorjs/editorjs";
 import {type InlineToolConstructorOptions} from "@editorjs/editorjs/types/tools/inline-tool";
 
 /**
- * Underline Tool for the Editor.js
+ * Strikethrough Tool for the Editor.js
  *
  * Allows to wrap inline fragment and style it somehow.
  */
-export default class Underline implements InlineTool {
+export default class Strikethrough implements InlineTool {
   /**
    * Class name for term-tag
    *
    * @type {string}
    */
   static get CSS(): string {
-    return 'cdx-underline';
+    return 'cdx-strike-through';
   };
 
   /**
@@ -33,7 +33,7 @@ export default class Underline implements InlineTool {
    *
    * @type {string}
    */
-  private tag: string = 'U';
+  private tag: string = 'S';
 
   /**
    * API InlineToolConstructorOptions
@@ -95,7 +95,7 @@ export default class Underline implements InlineTool {
       return;
     }
 
-    const termWrapper = this.api.selection.findParentTag(this.tag, Underline.CSS);
+    const termWrapper = this.api.selection.findParentTag(this.tag, Strikethrough.CSS);
 
     /**
      * If start or end of selection is in the highlighted block
@@ -118,7 +118,7 @@ export default class Underline implements InlineTool {
      */
     const u = document.createElement(this.tag);
 
-    u.classList.add(Underline.CSS);
+    u.classList.add(Strikethrough.CSS);
 
     /**
      * SurroundContent throws an error if the Range splits a non-Text node with only one of its boundary points
@@ -182,7 +182,7 @@ export default class Underline implements InlineTool {
    * Check and change Term's state for current selection
    */
   public checkState(): boolean {
-    const termTag = this.api.selection.findParentTag(this.tag, Underline.CSS);
+    const termTag = this.api.selection.findParentTag(this.tag, Strikethrough.CSS);
 
     this.button?.classList.toggle(this.iconClasses.active, !!termTag);
 
@@ -195,7 +195,7 @@ export default class Underline implements InlineTool {
    * @returns {string}
    */
   public get toolboxIcon(): string {
-    return IconUnderline;
+    return IconStrikethrough;
   }
 
   /**
@@ -206,7 +206,7 @@ export default class Underline implements InlineTool {
   public static get sanitize(): SanitizerConfig {
     return {
       u: {
-        class: Underline.CSS,
+        class: Strikethrough.CSS,
       },
     };
   }
